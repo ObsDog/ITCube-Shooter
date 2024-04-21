@@ -825,9 +825,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb684c2a209de342818cc26e3f2bf0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlType: 0
+  speed: 7
+  controlType: 1
   joystick: {fileID: 943090980}
-  speed: 5
 --- !u!50 &1590524821
 Rigidbody2D:
   serializedVersion: 4
