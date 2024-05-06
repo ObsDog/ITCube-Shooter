@@ -38,4 +38,19 @@ public class InputManager : MonoBehaviour
     {
         return inputs.Player.Movement.ReadValue<Vector2>();
     }
+
+    public Vector2 GetMousePosition()
+    {
+        return inputs.Player.MousePosition.ReadValue<Vector2>();
+    }
+
+    public bool Attack()
+    {
+        return inputs.Player.Attack.IsPressed();
+    }
+
+    public bool SwitchWeapon()
+    {
+        return inputs.Player.SwitchWeapon.triggered;
+    }
 }

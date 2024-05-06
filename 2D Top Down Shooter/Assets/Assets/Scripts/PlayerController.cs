@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed;
+    public float health = 100;
 
     //CONTROL TYPE
     public ControlType controlType;
@@ -14,8 +15,9 @@ public class PlayerController : MonoBehaviour
 
     //DESKTOP CONTROL
     private InputManager inputs;
-
     private Rigidbody2D rb;
+    private Animator anim;
+
     private Vector2 moveInput;
     private Vector2 moveVelocity;
 
@@ -27,6 +29,7 @@ public class PlayerController : MonoBehaviour
     {
         inputs = InputManager.Instance;
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
 
         if(controlType == ControlType.PC)
             joystick.gameObject.SetActive(false);
@@ -41,6 +44,11 @@ public class PlayerController : MonoBehaviour
             moveInput = new(joystick.Horizontal, joystick.Vertical);
 
         moveVelocity = moveInput.normalized * speed;
+
+        if (moveInput.x == 0 && moveInput.y == 0)
+            anim.SetBool("isRunning", false);
+        else
+            anim.SetBool("isRunning", true);
 
         //FLIP PLAYER
         if (!facingRight && moveInput.x > 0)
@@ -60,5 +68,10 @@ public class PlayerController : MonoBehaviour
         Vector3 scaler = transform.localScale;
         scaler.x *= -1;
         transform.localScale = scaler;
+    }
+
+    public void ChangeHealth(float healthValue)
+    {
+        health += healthValue;
     }
 }
