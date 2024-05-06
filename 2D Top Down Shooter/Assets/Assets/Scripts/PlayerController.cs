@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,6 +24,9 @@ public class PlayerController : MonoBehaviour
 
     private bool facingRight = true;
 
+    //POTION
+    public GameObject potionEffect;
+
     public enum ControlType {PC, Android}
 
     private void Start()
@@ -37,7 +41,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if(controlType == ControlType.PC)
+        if (controlType == ControlType.PC)
             moveInput = inputs.GetMovementPlayer();
 
         else if (controlType == ControlType.Android)
@@ -53,8 +57,16 @@ public class PlayerController : MonoBehaviour
         //FLIP PLAYER
         if (!facingRight && moveInput.x > 0)
             Flip();
-        else if(facingRight && moveInput.x < 0)
+        else if (facingRight && moveInput.x < 0)
             Flip();
+
+        //DEATH 
+        if (health <= 0) 
+        {
+            health = 0;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        if (health > 100) health = 100;
     }
 
     private void FixedUpdate()
@@ -68,6 +80,17 @@ public class PlayerController : MonoBehaviour
         Vector3 scaler = transform.localScale;
         scaler.x *= -1;
         transform.localScale = scaler;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.CompareTag("Potion") && health < 100)
+        {
+            ChangeHealth(20);
+            Instantiate(potionEffect, other.transform.position, Quaternion.identity);
+            Destroy(other.gameObject);
+            Debug.Log("Potion is used");
+        }
     }
 
     public void ChangeHealth(float healthValue)

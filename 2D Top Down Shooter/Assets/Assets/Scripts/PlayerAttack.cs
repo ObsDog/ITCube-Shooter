@@ -16,7 +16,7 @@ public class PlayerAttack : MonoBehaviour
 
     [SerializeField] private Transform attackPos;
     [SerializeField] private Animator anim;
-    [SerializeField] private PlayerController player;
+    private PlayerController player;
 
     [SerializeField] private LayerMask enemy;
 
