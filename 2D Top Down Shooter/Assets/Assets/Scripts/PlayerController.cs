@@ -5,14 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Controls")]
     [SerializeField] private float speed;
-    public float health = 100;
-
-    //CONTROL TYPE
-    public ControlType controlType;
-
-    //MOBILE CONTROL
     [SerializeField] private Joystick joystick;
+
+    public ControlType controlType;
 
     //DESKTOP CONTROL
     private InputManager inputs;
@@ -24,8 +21,12 @@ public class PlayerController : MonoBehaviour
 
     private bool facingRight = true;
 
-    //POTION
+    [Header("Bonuses")]
+    public float health = 100;
     public GameObject potionEffect;
+    public GameObject shieldEffect;
+    public GameObject shield;
+    public Shield shieldTimer;
 
     public enum ControlType {PC, Android}
 
@@ -91,10 +92,31 @@ public class PlayerController : MonoBehaviour
             Destroy(other.gameObject);
             Debug.Log("Potion is used");
         }
+        else if(other.CompareTag("Shield"))
+        {
+            if (!shield.activeInHierarchy)
+            {
+                shield.SetActive(true);
+                shieldTimer.gameObject.SetActive(true);
+                shieldTimer.isCooldown = true;
+                Instantiate(shieldEffect, other.transform.position, Quaternion.identity);
+                Destroy(other.gameObject);
+            }
+            else
+            {
+                shieldTimer.ResetTimer();
+                Instantiate(shieldEffect, other.transform.position, Quaternion.identity);
+                Destroy(other.gameObject);
+            }
+        }
     }
 
     public void ChangeHealth(float healthValue)
     {
-        health += healthValue;
+        if (!shield.activeInHierarchy || shield.activeInHierarchy && healthValue > 0)
+            health += healthValue;
+
+        else if (shield.activeInHierarchy && healthValue < 0)
+            shieldTimer.ReduceTimer(healthValue);
     }
 }
