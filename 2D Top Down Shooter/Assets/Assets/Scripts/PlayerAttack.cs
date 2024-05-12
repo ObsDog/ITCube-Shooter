@@ -16,6 +16,7 @@ public class PlayerAttack : MonoBehaviour
 
     [SerializeField] private Transform attackPos;
     [SerializeField] private Animator anim;
+    [SerializeField] private GameObject katana;
     private PlayerController player;
 
     [SerializeField] private LayerMask enemy;
@@ -33,7 +34,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-        if(IsAttacking)
+        if(IsAttacking && katana.activeInHierarchy)
         {
             anim.SetTrigger("attack");
             timeBetweenAttack = startTimeBetweenAttack;

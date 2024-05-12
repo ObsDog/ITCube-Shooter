@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeaponSwitch : MonoBehaviour
 {
-    [SerializeField] private GameObject[] weapon;
+    public GameObject[] allWeapons;
 
     //INPUT
     private InputManager inputs;
@@ -18,16 +18,16 @@ public class WeaponSwitch : MonoBehaviour
     {
         if(inputs.SwitchWeapon())
         {
-            for (int i = 0; i < weapon.Length; i++)
+            for (int i = 0; i < allWeapons.Length; i++)
             {
-                if (weapon[i].activeInHierarchy == true)
+                if (allWeapons[i].activeInHierarchy == true)
                 {
-                    weapon[i].SetActive(false);
+                    allWeapons[i].SetActive(false);
 
                     if(i != 0)
-                        weapon[i - 1].SetActive(true);
+                        allWeapons[i - 1].SetActive(true);
                     else
-                        weapon[^1].SetActive(true);
+                        allWeapons[^1].SetActive(true);
                     break;
                 }
             }

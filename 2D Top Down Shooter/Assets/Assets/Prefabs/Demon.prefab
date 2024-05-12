@@ -348,6 +348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   speed: 5
+  floatingDamage: {fileID: 6574482019600324184, guid: 7bdf98541f34a2942ba50a850f1d19dd, type: 3}
   startTimeBetweenAttack: 0.4
   damage: 10
   startStopTime: 0.1

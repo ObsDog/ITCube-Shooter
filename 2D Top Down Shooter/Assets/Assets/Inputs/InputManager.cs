@@ -53,4 +53,6 @@ public class InputManager : MonoBehaviour
     {
         return inputs.Player.SwitchWeapon.triggered;
     }
+
+    public bool Interact() { return inputs.Player.Interact.IsPressed(); }
 }

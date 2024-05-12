@@ -137,6 +137,6 @@ MonoBehaviour:
   damage: 15
   whatIsSolid:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 320
   enemyBullet: 1
   bulletEffect: {fileID: 4292460935875546013, guid: 0e5cded669f243f4c86b627dd51a25a0, type: 3}

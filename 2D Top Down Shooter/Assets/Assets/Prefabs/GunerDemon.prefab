@@ -224,6 +224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   speed: 5
+  floatingDamage: {fileID: 6574482019600324184, guid: 7bdf98541f34a2942ba50a850f1d19dd, type: 3}
   startTimeBetweenAttack: 0.4
   damage: 10
   startStopTime: 0.1
@@ -478,7 +479,7 @@ Transform:
   m_GameObject: {fileID: 6565844991489993525}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.155, y: 0.409, z: 0}
+  m_LocalPosition: {x: -0.106, y: 0.365, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -559,12 +560,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 7c989087fe6e61f4291c7d906e92c8ae, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 22e4539a6470eb240bbb2fc5c223a244, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.53333336, y: 0.4}
+  m_Size: {x: 0.8, y: 0.4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

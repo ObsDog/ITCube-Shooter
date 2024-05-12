@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
     private void Update()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, distance, whatIsSolid);
-        if(hit.collider != null && hit.collider.TryGetComponent(out Enemy enemy))
+        if (hit.collider != null && hit.collider.TryGetComponent(out Enemy enemy))
         {
             enemy.TakeDamage(damage);
             Instantiate(bulletEffect, transform.position, Quaternion.identity);
@@ -28,6 +28,11 @@ public class Bullet : MonoBehaviour
         else if (hit.collider != null && hit.collider.TryGetComponent(out PlayerController player) && enemyBullet)
         {
             player.ChangeHealth(-damage);
+            Instantiate(bulletEffect, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
+        else if (hit.collider != null)
+        {
             Instantiate(bulletEffect, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }

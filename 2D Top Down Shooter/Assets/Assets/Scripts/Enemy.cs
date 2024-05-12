@@ -1,23 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
+    public bool isBoss = false;
+
     [SerializeField] private float health;
     [SerializeField] private float speed;
+    [SerializeField] private GameObject floatingDamage;
 
     //ATTACK
     [SerializeField] private float startTimeBetweenAttack;
     [SerializeField] private float damage;
     private float timeBetweenAttack;
 
+    [HideInInspector] public bool playerNotInRoom;
+    private bool stopped;
+
     //TAKE_DAMAGE
     [SerializeField] private float startStopTime;
-    [SerializeField] private float normalSpeed;
     private float stopTime;
 
     private PlayerController player;
+    private AddRoom room;
     private Animator anim;
 
     //VFX
@@ -27,28 +34,41 @@ public class Enemy : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         player = FindFirstObjectByType<PlayerController>();
+        room = GetComponentInParent<AddRoom>();
     }
 
     private void Update()
     {
-        if (stopTime <= 0) speed = normalSpeed;
-        else
+        if (!playerNotInRoom)
         {
-            speed = 0;
-            stopTime -= Time.deltaTime;
+
+            if (stopTime <= 0) stopped = false;
+            else
+            {
+                stopped = true;
+                stopTime -= Time.deltaTime;
+            }
         }
+        else stopped = true;
 
         if (health <= 0) 
         {
             Instantiate(deathEffect, transform.position, Quaternion.identity);
             Destroy(gameObject); 
+            room.enemies.Remove(gameObject);
+
+            if (isBoss && room.enemies.Count == 0) SceneManager.LoadScene(0);
         }
+
         if (player.transform.position.x > transform.position.x)
             transform.eulerAngles = new Vector3(0, 0, 0);
         else
             transform.eulerAngles = new Vector3(0, 180, 0);
 
-        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+        if (!stopped)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+        }
 
         if (transform.position.magnitude != 0)
             anim.SetBool("isRunning", true);
@@ -60,6 +80,9 @@ public class Enemy : MonoBehaviour
     {
         stopTime = startStopTime;
         health -= damage;
+        Vector2 damagePos = new(transform.localPosition.x, transform.localPosition.y + 2.75f);
+        Instantiate(floatingDamage, damagePos, Quaternion.identity);
+        floatingDamage.GetComponent<FloatingDamage>().damage = damage;
     }
 
     public void OnTriggerStay2D(Collider2D other)
